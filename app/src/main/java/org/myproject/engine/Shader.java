@@ -1,6 +1,7 @@
-package org.myproject.rendering;
+package org.myproject.engine;
 
-import org.myproject.utils.*;
+
+
 
 import org.lwjgl.*;
 import org.joml.*;
@@ -8,12 +9,21 @@ import org.joml.*;
 import static org.lwjgl.opengl.GL30.*;
 
 import java.nio.*;
+import java.util.*;
 
 
 public class Shader{
+
+    public HashMap<String, Object> attributes = new HashMap<String, Object>();
+
     private int ID;
 
-    public Shader(String vertexPath, String fragmentPath)
+    private Boolean ready = false;
+    public Boolean isReady(){return ready;}
+
+
+
+    public void Compile(String vertexPath, String fragmentPath)
     {
         String vertexCode = FileUtils.ReadFileToString(vertexPath);
         String fragmentCode = FileUtils.ReadFileToString(fragmentPath);
@@ -40,13 +50,27 @@ public class Shader{
 		
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
-    }
-    
-    public void Use(){
-        glUseProgram(ID);
+        
+        ready = true;
     }
 
-    public void setMat4(String name, Matrix4f value) {
+    
+    public void Use(){
+        if(!ready)
+            return;
+        glUseProgram(ID);
+
+        for(String i : attributes.keySet()){
+            Object currentAttrib = attributes.get(i);
+            String currentType = currentAttrib.getClass().getName();
+
+            if(currentType == "Matrix4f")
+                setMat4(i, (Matrix4f) currentAttrib);
+        }
+
+    }
+
+    private void setMat4(String name, Matrix4f value) {
         FloatBuffer buf = BufferUtils.createFloatBuffer(16);
         value.get(buf);
         glUniformMatrix4fv(
@@ -55,4 +79,12 @@ public class Shader{
             buf
         );
     } 
+
+    private void setSampler(String name, int index) {
+         
+        glUniform1i(
+            glGetUniformLocation(ID, name),
+            index
+        );
+    }
 }

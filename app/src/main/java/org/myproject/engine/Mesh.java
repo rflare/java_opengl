@@ -1,12 +1,10 @@
-package org.myproject.rendering;
+package org.myproject.engine;
 
 
 import static org.lwjgl.opengl.GL30.*;
 
 
 public class Mesh{
-
-    private static final int FLOAT_SIZE = 4;
 
     private int VAO;
 
@@ -22,14 +20,14 @@ public class Mesh{
     public Mesh(float[] coords, float[] colors, float[] texCoords, float[] normals, int[] indices){
         
 
-        vertexCount = coords.length / 3;
+        vertexCount = indices.length;
 
         VAO = glGenVertexArrays();
 
         coordBO = glGenBuffers();
         colorBO = glGenBuffers();
         textureBO = glGenBuffers();
-        textureBO = glGenBuffers();
+        normalBO = glGenBuffers();
 
         EBO = glGenBuffers();
 
@@ -38,24 +36,24 @@ public class Mesh{
         
         glBindBuffer(GL_ARRAY_BUFFER, coordBO);
 		glBufferData(GL_ARRAY_BUFFER, coords, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
 
         glBindBuffer(GL_ARRAY_BUFFER, colorBO);
 		glBufferData(GL_ARRAY_BUFFER, colors, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 4, GL_FLOAT, false, 0, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, textureBO);
 		glBufferData(GL_ARRAY_BUFFER, texCoords, GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, normalBO);
 		glBufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
-		glVertexAttribPointer(3, 2, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 3, GL_FLOAT, false, 0, 0);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);

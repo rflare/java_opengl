@@ -1,8 +1,8 @@
-package org.myproject.rendering;
+package org.myproject.engine;
 
-import org.myproject.utils.*;
 
 import org.lwjgl.stb.*;
+
 
 import static org.lwjgl.opengl.GL30.*;
 
@@ -44,7 +44,9 @@ public class Texture{
 
     }
 
+
     public void Use(){
+        glActiveTexture(GL_TEXTURE0 + this.hashCode());
         glBindTexture(GL_TEXTURE_2D, texture);
     }
 }

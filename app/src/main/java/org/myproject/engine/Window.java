@@ -11,24 +11,24 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 
 
-public class WindowManager{
+public class Window{
 
-    private static WindowManager instance = null;
+    private static Window instance = null;
 
     private long window;
 
-    public static final int SCREEN_WIDTH = 800;
-    public static final int SCREEN_HEIGHT = 800;
+    public static final int SCREEN_WIDTH = 1920;
+    public static final int SCREEN_HEIGHT = 1080;
     public static final String SCREEN_TITLE = "Hello Java + Gradle + LWJGL + JOML + Kotlin";
 
-    public static WindowManager Get(){
+    public static Window Get(){
         if(instance == null)
-            instance = new WindowManager();
+            instance = new Window();
         return instance;
     }
 
 
-    private WindowManager(){
+    private Window(){
 
 		// Setup an error callback. The default implementation
 		// will print the error message in System.err.
@@ -91,20 +91,19 @@ public class WindowManager{
 		glfwSetErrorCallback(null).free();
     }
 
-    public void LoopBegin(){
+    public void Update(){
 
-        glEnable(GL_DEPTH_TEST);  
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-    }
-
-    public void LoopEnd(){
         glfwSwapBuffers(window); // swap the color buffers
 
 		// Poll for window events. The key callback above will only be
 		// invoked during this call.
 		glfwPollEvents();
-    } 
+        glEnable(GL_DEPTH_TEST);  
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+        
+    }
+
 
 
     public Boolean ShouldClose(){
