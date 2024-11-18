@@ -10,9 +10,9 @@ public class GameObject {
     public void Draw(){
 
 
+        shader.Use();
         if(model != null)
             model.Draw();
 
-        shader.Use();
     }
 }

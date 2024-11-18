@@ -60,9 +60,11 @@ public class Shader{
             return;
         glUseProgram(ID);
 
+
         for(String i : attributes.keySet()){
             Object currentAttrib = attributes.get(i);
             String currentType = currentAttrib.getClass().getName();
+
 
             if(currentType == "Matrix4f")
                 setMat4(i, (Matrix4f) currentAttrib);

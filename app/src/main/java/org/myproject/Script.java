@@ -14,7 +14,6 @@ public class Script{
     public void Start(){
         backpack.shader.Compile("vertex.glsl", "fragment.glsl");
         Matrix4f modeltransform = new Matrix4f();
-        modeltransform.translate(0f, 0f, -3f);
 
         Model model = new Model("Survival_BackPack_2/Survival_BackPack_2.fbx");
         backpack.model = model;
@@ -49,9 +48,14 @@ public class Script{
         if(window.Input(GLFW_KEY_D, GLFW_PRESS)) deltaCameraPos.add(cameraRight);
         if(window.Input(GLFW_KEY_A, GLFW_PRESS)) deltaCameraPos.sub(cameraRight);
 
-        deltaCameraPos.mul(time.deltaTime);
+        if(deltaCameraPos.length() != 0){
+            deltaCameraPos.normalize();
+        }
+
+        deltaCameraPos.mul(time.deltaTime * 10);
 
         camera.cameraPos.add(deltaCameraPos);
+
 
         backpack.shader.attributes.put("view", camera.View());
         backpack.shader.attributes.put("projection", camera.PerspectiveProjection());

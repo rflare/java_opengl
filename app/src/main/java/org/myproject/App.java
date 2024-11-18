@@ -16,7 +16,6 @@ public class App {
 
         Window windowManager = Window.Get();
         Scene scene = Scene.Get();
-        Camera mycamera = Camera.Get();
         Time time = Time.Get();
 
         Script gameScript = new Script();
@@ -26,10 +25,10 @@ public class App {
 
 		while ( !windowManager.ShouldClose()) {
 		    windowManager.Update();	
+            gameScript.Update();
             scene.Update();
             time.Update();
 
-            gameScript.Update();
             
 
 
