@@ -21,12 +21,17 @@ public class Shader{
     private Boolean ready = false;
     public Boolean isReady(){return ready;}
 
+    public Shader(){
+        ready = false;
+    }
+
 
 
     public void Compile(String vertexPath, String fragmentPath)
     {
         String vertexCode = FileUtils.ReadFileToString(vertexPath);
         String fragmentCode = FileUtils.ReadFileToString(fragmentPath);
+
        
         int vertexShader = glCreateShader(GL_VERTEX_SHADER); 
         glShaderSource(vertexShader, vertexCode);
@@ -58,7 +63,6 @@ public class Shader{
     public void Use(){
         if(!ready)
             return;
-        glUseProgram(ID);
 
 
         for(String i : attributes.keySet()){
@@ -69,6 +73,7 @@ public class Shader{
             if(currentType == "Matrix4f")
                 setMat4(i, (Matrix4f) currentAttrib);
         }
+        glUseProgram(ID);
 
     }
 

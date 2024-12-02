@@ -29,18 +29,6 @@ public class App {
             scene.Update();
             time.Update();
 
-            
-
-
-
-
-
-
-
-
-
-
-			
 		}
 		
     

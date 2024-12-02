@@ -11,8 +11,9 @@ public class GameObject {
 
 
         shader.Use();
-        if(model != null)
+        if(model != null){
             model.Draw();
+        }
 
     }
 }

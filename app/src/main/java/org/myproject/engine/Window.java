@@ -79,6 +79,10 @@ public class Window{
 		// creates the GLCapabilities instance and makes the OpenGL
 		// bindings available for use.
 		GL.createCapabilities();
+
+
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
     public void Terminate(){
@@ -101,6 +105,7 @@ public class Window{
         glEnable(GL_DEPTH_TEST);  
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
         
     }
 
